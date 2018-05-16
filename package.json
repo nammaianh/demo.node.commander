@@ -1,0 +1,17 @@
+{
+  "name": "demo.node.commander",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Mai Anh Nam <nammaianh@hotmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^2.15.1",
+    "joi": "^13.3.0",
+    "node-version-compare": "^1.0.1"
+  }
+}
