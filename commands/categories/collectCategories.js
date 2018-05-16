@@ -6,12 +6,12 @@
 
 module.exports = async function collectCategories (storeCode, options) {
   try {
-    const { verbose, queue: useQueue, optionalValue, requiredValue } = options;
+    const { verbose, queue: useQueue, optionalValue, requiredValue, items } = options;
 
     // TODO: Register all types of examples for command.
     // TODO: Log all types of examples of options.
 
-    console.log({ storeCode, verbose, useQueue, optionalValue, requiredValue });
+    console.log({ storeCode, verbose, useQueue, optionalValue, requiredValue, items });
 
     if (useQueue)
       await publishJob(storeCode);
@@ -40,7 +40,7 @@ module.exports.registry = {
       description: 'Push job into message queue instead of execute instantly.'
     },
     {
-      flag        : '-l, --optional-value [value]',
+      flag        : '-o, --optional-value [value]',
       description : 'Just a flag, named "optional-list", for input demonstration.',
       regex       : /^(large|medium|small)$/i,
       defaultValue: 'undefined or wrong'
@@ -50,6 +50,15 @@ module.exports.registry = {
       description : 'Just a flag, named "required-list", for input demonstration.',
       regex       : /^(large|medium|small)$/i,
       defaultValue: 'wrong'
+    },
+    {
+      flag       : '-i, --items <itemName>',
+      description: 'Add a list of items',
+      coercion (itemName, items) {
+        items.push(itemName);
+        return items;
+      },
+      initValue: []
     }
   ]
 };
