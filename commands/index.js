@@ -1,8 +1,8 @@
 'use strict';
 
-const path                       = require('path');
-const fs                         = require('fs');
-const validateLoadedCommandGroup = require('./validateLoadedCommandGroup');
+const path                   = require('path');
+const fs                     = require('fs');
+const validateLoadedCommands = require('./validateLoadedCommands');
 
 module.exports = { registerCommands };
 
@@ -28,15 +28,15 @@ function registerCommands (program) {
 
 function loadCommands () {
   const itemsOnThisDir = fs.readdirSync(__dirname);
-  const loadedCmds     = [];
+  const cmds           = [];
 
   itemsOnThisDir
     .map(buildCmdGroupAbsPath)
     .filter(pathIsDirectory)
     .map(loadCommandGroup)
-    .forEach(newCmds => loadedCmds.push(...newCmds));
+    .forEach(loadedCmds => cmds.push(...loadedCmds));
 
-  return loadedCmds;
+  return cmds;
 }
 
 function buildCmdGroupAbsPath (cmdGroupName) {
@@ -49,7 +49,7 @@ function pathIsDirectory (absPath) {
 
 function loadCommandGroup (cmdGroupAbsPath) {
   const cmds = require(cmdGroupAbsPath);
-  validateLoadedCommandGroup(cmds);
+  validateLoadedCommands(cmds);
   return cmds;
 }
 
